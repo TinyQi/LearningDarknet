@@ -87,15 +87,34 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="activations.c" />
+    <ClCompile Include="box.c" />
+    <ClCompile Include="darknet.c" />
+    <ClCompile Include="data.c" />
+    <ClCompile Include="detector.c" />
     <ClCompile Include="gemm.cpp" />
     <ClCompile Include="img2col.cpp" />
+    <ClCompile Include="list.c" />
+    <ClCompile Include="matrix.c" />
+    <ClCompile Include="network.c" />
+    <ClCompile Include="option_list.c" />
+    <ClCompile Include="parser.c" />
+    <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="activations.h" />
+    <ClInclude Include="box.h" />
+    <ClInclude Include="cuda.h" />
+    <ClInclude Include="data.h" />
     <ClInclude Include="gemm.h" />
     <ClInclude Include="img2col.h" />
+    <ClInclude Include="layer.h" />
+    <ClInclude Include="list.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="network.h" />
+    <ClInclude Include="option_list.h" />
+    <ClInclude Include="parser.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
