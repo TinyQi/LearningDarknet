@@ -143,6 +143,17 @@ char * option_find_str(list * l, char * key, char * def)
 	return def;
 }
 
+//不输出错误信息
+char * option_find_str_quiet(list * l, char * key, char * def)
+{
+	char *val = option_find(l, key);
+
+	//查找成功,则返回字符串val
+	if (val)return val;
+
+	return def;
+}
+
 int option_find_int(list * l, char * key, int def)
 {
 	char *val = option_find(l, key);
@@ -156,6 +167,15 @@ int option_find_int(list * l, char * key, int def)
 	return def;
 }
 
+int option_find_int_quiet(list * l, char * key, int def)
+{
+	char *val = option_find(l, key);
+
+	//查找成功,则将字符串val转成int再返回
+	if (val)return atoi(val);
+	return def;
+}
+
 float option_find_float(list * l, char * key, float def)
 {
 	char *val = option_find(l, key);
@@ -166,6 +186,15 @@ float option_find_float(list * l, char * key, float def)
 	//查找失败,则使用默认值
 	if (def)
 		fprintf(stderr, "%s:Using default '%.1f'\n", key, def);
+	return def;
+}
+
+float option_find_float_quiet(list * l, char * key, float def)
+{
+	char *val = option_find(l, key);
+
+	//查找成功,则将字符串val转成float再返回
+	if (val)return atof(val);
 	return def;
 }
 

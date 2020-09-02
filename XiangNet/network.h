@@ -2,6 +2,10 @@
 #define NETWORK_H
 #include "layer.h"
 
+typedef enum {
+	CONSTANT, STEP, EXP, POLY, STEPS, SIG, RANDOM
+} learning_rate_policy;
+
 typedef struct network
 {
 	int n;                          // 网络总层数
@@ -15,12 +19,11 @@ typedef struct network
 	float decay;                    //权重衰减值
 	
 	layer *layers;                  //网络中的所有层
-	float learning_rate;
 
 	float *cost;					//损失
 	int gpu_index;					//所用gpu的卡号
 
-	int time_steps;					//应该是一轮batch里跳着读的步长
+	
 	int notruth;					//?
 
 	int adam;						//?我目前理解为是否开adam优化
@@ -29,6 +32,38 @@ typedef struct network
 	float eps;						//?adam优化相关的参数
 
 	int w, h, c;					//?可能就特指输入图片的长,宽,通道
+
+	int inputs;						//一张输入图片的元素个数,默认等于net->h * net->w * net->c
+	int outputs;					//一张图片对应的输出元素个数,对于卷积层,可以根据输入及kernel相关参数,算出outputs
+
+	int max_crop;					//?
+	int min_crop;					//?
+	int center;						//?
+	float angle;					//?
+	float aspect;					//?
+	float exposure;					//?
+	float saturation;				//?
+	float hue;						//?
+	
+	
+
+
+	//调整学习率相关
+	learning_rate_policy policy;    //调整学习率的方法
+	float gamma;					//具体看parse_net_option(),todo:这里有个问题,如果把这一行挪到learning_rate下面,就会编译不过,报的是没有gamma这个成员,但是很奇怪,明明有的
+	float learning_rate;			//初始学习率parse_net_options()中赋值
+	
+	float scale;					//具体看parse_net_option()
+	float power;					//?
+	int time_steps;					//应该是一轮batch里跳着读的步长
+	int step;						//具体看parse_net_option()
+	float *scales;					//具体看parse_net_option()
+	int   *steps;					//具体看parse_net_option()
+	int num_steps;					//?
+	int burn_in;					//具体看parse_net_option()
+
+	int max_batches;				//?最大batch次数?用于终止训练吗?
+
 
 }network;
 
