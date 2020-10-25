@@ -1,7 +1,7 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 #include "layer.h"
-
+#include "tree.h"
 typedef enum {
 	CONSTANT, STEP, EXP, POLY, STEPS, SIG, RANDOM
 } learning_rate_policy;
@@ -23,8 +23,18 @@ typedef struct network
 	float *cost;					//损失
 	int gpu_index;					//所用gpu的卡号
 
+
+	// 中间变量，用来暂存某层网络的输入（包含一个batch的输入，比如某层网络完成前向，将其输出赋给该变量，作为下一层的输入，可以参看network.c中的forward_network()与backward_network()两个函数），
+	// 当然，也是网络接受最原始输入数据（即第一层网络接收的输入）的变量（比如在图像检测训练中，最早在train_detector()->train_network()->get_next_batch()函数中赋值）
+	float *input;       
+
+	float *output;
+
 	
-	int notruth;					//?
+	// 中间变量，与上面的input对应，用来暂存input数据对应的标签数据（真实数据）
+	float *truth;
+
+
 
 	int adam;						//?我目前理解为是否开adam优化
 	float B1;						//?adam优化相关的参数
@@ -45,8 +55,9 @@ typedef struct network
 	float saturation;				//?
 	float hue;						//?
 	
+	int train;						//是否训练的标记位
 	
-
+	float *delta;
 
 	//调整学习率相关
 	learning_rate_policy policy;    //调整学习率的方法
@@ -64,10 +75,25 @@ typedef struct network
 
 	int max_batches;				//?最大batch次数?用于终止训练吗?
 
+	tree *hierarchy;					//层次树?
+
+	int truths;
+	int notruth;
+
+	// 整个网络的工作空间，其元素个数为所有层中最大的l.workspace_size = l.out_h*l.out_w*l.size*l.size*l.c
+	// （在make_convolutional_layer()计算得到workspace_size的大小，在parse_network_cfg()中动态分配内存，
+	// 此值对应未使用gpu时的情况），该变量貌似不轻易被释放内存，目前只发现在network.c的resize_network()函数对其进行了释放。
+	// net.workspace充当一个临时工作空间的作用，存储临时所需要的计算参数，比如每层单张图片重排后的结果
+	// （这些参数马上就会参与卷积运算），一旦用完，就会被马上更新（因此该变量的值的更新频率比较大）
+	float *workspace;   
 
 }network;
 
 //初始化网络,注意这里的n不包括通用参数层,就是那个[net]
 network make_network(int n);
-#endif // !NETWORK_H
 
+
+//返回网络输出层
+layer get_network_output_layer(network net);
+
+#endif // !NETWORK_H

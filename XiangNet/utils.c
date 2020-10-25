@@ -114,3 +114,75 @@ char * fgetl(FILE * fp)
 
 	return line;
 }
+
+
+// From http://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+// Box-Muller transform是一种获取独立，标准正态分布随机数的方法
+// 返回标准正态分布随机数（float）
+float rand_normal()
+{
+	static int haveSpare = 0;
+	static double rand1, rand2;
+
+	// z0和z1都用了，并不是只用z0或只用z1
+	if (haveSpare)
+	{
+		haveSpare = 0;
+		// z1 = sqrt(-2 * log(rand1)) * sin(rand2)
+		return sqrt(rand1) * sin(rand2);
+	}
+
+	haveSpare = 1;
+
+	// 产生0~1的随机数
+	rand1 = rand() / ((double)RAND_MAX);
+	if (rand1 < 1e-100) rand1 = 1e-100;  // 不能太小
+	rand1 = -2 * log(rand1);
+	// 产生0~2*PI之间的随机数
+	rand2 = (rand() / ((double)RAND_MAX)) * TWO_PI;
+
+	// z0 = sqrt(-2 * log(rand1)) * cos(rand2)
+	return sqrt(rand1) * cos(rand2);
+}
+
+/*
+** 产生(min,max)区间均匀分布的随机数
+** 输入： min     区间下限
+**       max     区间上限
+** 注意:输入的min,max并不一定min<max，所以函数内先比较了二者之间的大小，确保区间上下限无误
+*/
+float rand_uniform(float min, float max)
+{
+	if (max < min) {
+		float swap = min;
+		min = max;
+		max = swap;
+	}
+	return ((float)rand() / RAND_MAX * (max - min)) + min;
+}
+
+int *read_map(char *filename)
+{
+	int n = 0;
+	int *map = 0;
+	char *str;
+	FILE *file = fopen(filename, "r");
+	if (!file) file_error(filename);
+	while ((str = fgetl(file))) {
+		++n;
+		map = realloc(map, n * sizeof(int));
+		map[n - 1] = atoi(str);
+	}
+	return map;
+}
+
+//对数组所有元素求平方和的开根号???
+float mag_array(float *a, int n)
+{
+	int i;
+	float sum = 0;
+	for (i = 0; i < n; ++i) {
+		sum += a[i] * a[i];
+	}
+	return sqrt(sum);
+}

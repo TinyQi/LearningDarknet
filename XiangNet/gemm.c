@@ -96,9 +96,12 @@ void gemmTT(int A_C_row, int B_C_col, int A_col_B_row,
 // ldb     B的列数（不做转置）或者行数（做转置，且给的是转置后B即B'的行数）,这个值就不会变,转置前的列就是转置后的行
 // ldc     C的列数
 // 为什么要分上面两种命名呢?
-// 因为矩阵计算的for循环的规则要根据A_C_row,B_C_col等来制定,而具体进行运算的时候,又要根据真实的数据存储参数(就像lda,ldb,ldc)来准确的取到相应的数据
-void gemm(bool isA_Transpose, bool isB_Transpose, int A_C_row, int B_C_col, int A_col_B_row,
-	float *A, float *B, float *C, int lda, int ldb, int ldc,int alpha ,int beta)
+// 因为矩阵计算的for循环的规则要根据A_C_row,B_C_col等来制定,而具体进行运算的时候,又要根据真实的数据存储参数(就像lda,ldb,ldc)计算索引,来准确的取到相应的数据
+void gemm(int isA_Transpose, int isB_Transpose, int A_C_row, int B_C_col, int A_col_B_row, float alpha,
+	float *A, int lda,
+	float *B, int ldb, 
+	float beta,
+	float *C, int ldc)
 {
 	//由于 BETA * C 这个跟A和B没有关系,所以这里先提前计算了
 	for (int i = 0; i < A_C_row; i++)

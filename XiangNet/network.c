@@ -10,3 +10,12 @@ network make_network(int n)
 
 	return net;
 }
+
+layer get_network_output_layer(network net)
+{
+	int i;
+	for (i = net.n - 1; i >= 0; --i) {
+		if (net.layers[i].type != COST) break;
+	}
+	return net.layers[i];
+}

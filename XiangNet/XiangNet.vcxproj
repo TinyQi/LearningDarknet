@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4143BE79-F1F6-43A4-8E93-41A56E0655CB}</ProjectGuid>
     <RootNamespace>XiangNet</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -88,21 +89,46 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="activations.c" />
+    <ClCompile Include="activation_layer.c" />
+    <ClCompile Include="batchnorm_layer.c" />
+    <ClCompile Include="blas.c" />
     <ClCompile Include="box.c" />
+    <ClCompile Include="col2im.c" />
+    <ClCompile Include="connected_layer.c" />
+    <ClCompile Include="convolutional_layer.c" />
+    <ClCompile Include="cost_layer.c" />
     <ClCompile Include="darknet.c" />
     <ClCompile Include="data.c" />
     <ClCompile Include="detector.c" />
-    <ClCompile Include="gemm.cpp" />
-    <ClCompile Include="img2col.cpp" />
+    <ClCompile Include="gemm.c" />
+    <ClCompile Include="img2col.c" />
     <ClCompile Include="list.c" />
     <ClCompile Include="matrix.c" />
+    <ClCompile Include="maxpool_layer.c" />
     <ClCompile Include="network.c" />
+    <ClCompile Include="normalization_layer.c" />
     <ClCompile Include="option_list.c" />
     <ClCompile Include="parser.c" />
+    <ClCompile Include="region_layer.c" />
+    <ClCompile Include="reorg_layer.c" />
+    <ClCompile Include="route_layer.c" />
+    <ClCompile Include="shortcut_layer.c" />
+    <ClCompile Include="softmax_layer.c" />
+    <ClCompile Include="tree.cpp" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="activations.h" />
+    <ClInclude Include="batchnorm_layer.h" />
+    <ClInclude Include="blas.h" />
+    <ClInclude Include="col2im.h" />
+    <ClInclude Include="connected_layer.h" />
+    <ClInclude Include="convolutional_layer.h" />
+    <ClInclude Include="cost_layer.h" />
+    <ClInclude Include="detection_layer.h" />
+    <ClInclude Include="maxpool_layer.h" />
+    <ClInclude Include="normalization_layer.h" />
+    <ClInclude Include="activation_layer.h" />
     <ClInclude Include="box.h" />
     <ClInclude Include="cuda.h" />
     <ClInclude Include="data.h" />
@@ -114,7 +140,17 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="network.h" />
     <ClInclude Include="option_list.h" />
     <ClInclude Include="parser.h" />
+    <ClInclude Include="region_layer.h" />
+    <ClInclude Include="reorg_layer.h" />
+    <ClInclude Include="route_layer.h" />
+    <ClInclude Include="shortcut_layer.h" />
+    <ClInclude Include="softmax_layer.h" />
+    <ClInclude Include="tree.h" />
     <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cfg\yolov2-tiny.cfg" />
+    <None Include="cfg\yolov2.cfg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

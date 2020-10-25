@@ -7,8 +7,9 @@ typedef struct box
 	float x, y, w, h;
 }box;
 
+box float_to_box(float *f, int stride);
 
-
+float box_iou(box a, box b);
 
 
 

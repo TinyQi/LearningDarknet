@@ -1,8 +1,8 @@
 #include "img2col.h"
 
-#include <opencv2\core\core.hpp>
-#include <opencv2\imgproc\imgproc.hpp>
-#include <opencv2\highgui\highgui.hpp>
+//#include <opencv2\core\core.hpp>
+//#include <opencv2\imgproc\imgproc.hpp>
+//#include <opencv2\highgui\highgui.hpp>
 
 #include "gemm.h"
 
@@ -104,96 +104,96 @@ void img2col(int *data, int *dataCol, int width, int height, int channels, int k
 
 
 
-void test_img2col()
-{
-	//cv::Mat test_img = cv::Mat::zeros(test_img_width_height, test_img_width_height, CV_8UC1);
-	int test_img_cols = 3;
-	int test_img_rows = 2;
-
-
-	float *data_A = (float*)calloc(test_img_cols * test_img_rows, sizeof(float));
-	float *data_B = (float*)calloc(test_img_cols * test_img_rows, sizeof(float));
-
-	//A
-	//data_A[0] = 1;
-	//data_A[1] = 2;
-	//data_A[2] = 3;
-	//data_A[3] = 4;
-	//data_A[4] = 5;
-	//data_A[5] = 6;
-
-	//A'
-	data_A[0] = 1;
-	data_A[1] = 4;
-	data_A[2] = 2;
-	data_A[3] = 5;
-	data_A[4] = 3;
-	data_A[5] = 6;
-
-	//B
-	//data_B[0] = 1;
-	//data_B[1] = 2;
-	//data_B[2] = 3;
-	//data_B[3] = 4;
-	//data_B[4] = 5;
-	//data_B[5] = 6;
-
-	//B'
-	data_B[0] = 1;
-	data_B[1] = 3;
-	data_B[2] = 5;
-	data_B[3] = 2;
-	data_B[4] = 4;
-	data_B[5] = 6;
-
-
-	//展示data数组
-	showVec_float(data_A, 3 ,2, 1);
-	showVec_float(data_B, 2 ,3, 1);
-
-	float *data_C = (float*)calloc(test_img_rows * test_img_rows, sizeof(float));
-	
-	int alpha = 1;
-	int beta = 0;
-	
-	//A*B,测试通过
-	//gemm(false, false, test_img_rows, test_img_rows, test_img_cols, data_A, data_B, data_C, test_img_cols, test_img_rows, test_img_rows, alpha,beta);
-	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
-
-	//A*B',测试通过
-	//gemm(false, true, 2, 2, 3, data_A, data_B, data_C, 3, 3, 2, alpha, beta);
-	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
-
-	//A'*B,测试通过
-	//gemm(true, false, 2, 2, 3, data_A, data_B, data_C, 2, 2, 2, alpha, beta);
-	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
-
-	//A'*B'
-	gemm(true, true, 2, 2, 3, data_A, data_B, data_C, 2, 3, 2, alpha, beta);
-	showVec_float(data_C, test_img_rows, test_img_rows, 1);
-
-	int asdasdasd = 0;
-
-	//int width = test_img_cols, height = test_img_cols, channels = 1;
-	//int k_size = 3;
-	//int stride = 1;
-	//int pad = 1;
-
-	////注意,这里一般是提前准备超量的内存备用,我这里是因为知道结果是多少个int,所以测试就简单点
-	//int out_w = ((test_img_cols + 2 * pad - k_size) / stride + 1);
-	//int out_h = out_w;
-	//int img_col_length = out_w * out_h * k_size * k_size;
-	//int *data_col = (int*)calloc(img_col_length, sizeof(int));
-
-	//img2col(data_A, data_col, width, height, channels, k_size, stride, pad);
-
-	//showVec(data_col, out_w*out_h, k_size * k_size, 1);
-
-	////test_img.release();
-	free(data_A);
-	free(data_B);
-	free(data_C);
-
-	//free(data_col);
-	
-}
+//void test_img2col()
+//{
+//	//cv::Mat test_img = cv::Mat::zeros(test_img_width_height, test_img_width_height, CV_8UC1);
+//	int test_img_cols = 3;
+//	int test_img_rows = 2;
+//
+//
+//	float *data_A = (float*)calloc(test_img_cols * test_img_rows, sizeof(float));
+//	float *data_B = (float*)calloc(test_img_cols * test_img_rows, sizeof(float));
+//
+//	//A
+//	//data_A[0] = 1;
+//	//data_A[1] = 2;
+//	//data_A[2] = 3;
+//	//data_A[3] = 4;
+//	//data_A[4] = 5;
+//	//data_A[5] = 6;
+//
+//	//A'
+//	data_A[0] = 1;
+//	data_A[1] = 4;
+//	data_A[2] = 2;
+//	data_A[3] = 5;
+//	data_A[4] = 3;
+//	data_A[5] = 6;
+//
+//	//B
+//	//data_B[0] = 1;
+//	//data_B[1] = 2;
+//	//data_B[2] = 3;
+//	//data_B[3] = 4;
+//	//data_B[4] = 5;
+//	//data_B[5] = 6;
+//
+//	//B'
+//	data_B[0] = 1;
+//	data_B[1] = 3;
+//	data_B[2] = 5;
+//	data_B[3] = 2;
+//	data_B[4] = 4;
+//	data_B[5] = 6;
+//
+//
+//	//展示data数组
+//	showVec_float(data_A, 3 ,2, 1);
+//	showVec_float(data_B, 2 ,3, 1);
+//
+//	float *data_C = (float*)calloc(test_img_rows * test_img_rows, sizeof(float));
+//	
+//	int alpha = 1;
+//	int beta = 0;
+//	
+//	//A*B,测试通过
+//	//gemm(false, false, test_img_rows, test_img_rows, test_img_cols, data_A, data_B, data_C, test_img_cols, test_img_rows, test_img_rows, alpha,beta);
+//	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
+//
+//	//A*B',测试通过
+//	//gemm(false, true, 2, 2, 3, data_A, data_B, data_C, 3, 3, 2, alpha, beta);
+//	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
+//
+//	//A'*B,测试通过
+//	//gemm(true, false, 2, 2, 3, data_A, data_B, data_C, 2, 2, 2, alpha, beta);
+//	//showVec_float(data_C, test_img_rows, test_img_rows, 1);
+//
+//	//A'*B'
+//	gemm(1, 1, 2, 2, 3, data_A, data_B, data_C, 2, 3, 2, alpha, beta);
+//	showVec_float(data_C, test_img_rows, test_img_rows, 1);
+//
+//	int asdasdasd = 0;
+//
+//	//int width = test_img_cols, height = test_img_cols, channels = 1;
+//	//int k_size = 3;
+//	//int stride = 1;
+//	//int pad = 1;
+//
+//	////注意,这里一般是提前准备超量的内存备用,我这里是因为知道结果是多少个int,所以测试就简单点
+//	//int out_w = ((test_img_cols + 2 * pad - k_size) / stride + 1);
+//	//int out_h = out_w;
+//	//int img_col_length = out_w * out_h * k_size * k_size;
+//	//int *data_col = (int*)calloc(img_col_length, sizeof(int));
+//
+//	//img2col(data_A, data_col, width, height, channels, k_size, stride, pad);
+//
+//	//showVec(data_col, out_w*out_h, k_size * k_size, 1);
+//
+//	////test_img.release();
+//	free(data_A);
+//	free(data_B);
+//	free(data_C);
+//
+//	//free(data_col);
+//	
+//}

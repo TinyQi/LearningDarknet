@@ -28,6 +28,7 @@ void train_detector(char *datacfg, char *cfg, char *weightfile, int *gpus, int n
 	int i = 0;
 	for ( i = 0; i < ngpus; i++)
 	{
+		//解析配置并初始化各个层
 		nets[i] = parse_network_cfg(cfg);
 		if (weightfile)
 		{
